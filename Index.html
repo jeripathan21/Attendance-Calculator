@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Attendance Calculator</title>
+<style>
+body{font-family:sans-serif; background:#fff0f5; display:flex; justify-content:center; padding:20px;}
+.box{background:white; padding:25px; border-radius:20px; box-shadow:0 5px 15px pink; width:100%; max-width:350px; text-align:center;}
+input{width:90%; padding:12px; margin:8px 0; border:2px solid pink; border-radius:10px;}
+button{width:95%; padding:12px; background:#ff69b4; color:white; border:none; border-radius:10px; font-weight:bold; margin-top:10px;}
+.safe{color:green; font-weight:bold;} .danger{color:red; font-weight:bold;}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>🎓 Smart Attendance</h2>
+<label>Total Lectures</label><input type="number" id="total" placeholder="ex: 60">
+<label>Attended</label><input type="number" id="attend" placeholder="ex: 48">
+<label>Need %</label><input type="number" id="need" value="75">
+<button onclick="calculate()">Calculate Karo</button>
+<div id="result"></div>
+</div>
+<script>
+function calculate(){
+let total=document.getElementById('total').value;
+let attend=document.getElementById('attend').value;
+let need=document.getElementById('need').value;
+if(!total||!attend){alert("Dono box bharo!");return;}
+total=parseInt(total);attend=parseInt(attend);need=parseInt(need);
+if(attend>total){alert("Attend Total se zyada kaise? Sahi daalo!");return;}
+let percent=(attend/total*100).toFixed(2);
+let msg="<h3>"+percent+"% Hai</h3>";
+if(percent>=need){
+let canBunk=Math.floor((attend*100/need)-total);
+msg+="<p class='safe'>Safe ho! "+canBunk+" lectures bunk kar sakti ho.</p>";
+}else{
+let needAttend=Math.ceil((need*total-100*attend)/(100-need));
+msg+="<p class='danger'>Agle "+needAttend+" lectures attend karne honge.</p>";
+}
+document.getElementById('result').innerHTML=msg;
+}
+</script>
+</body>
+</html>
